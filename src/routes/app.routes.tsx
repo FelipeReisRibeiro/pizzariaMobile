@@ -3,16 +3,35 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import SignIn from "../pages/Dashboard";
+
 import Dashboard from "../pages/Dashboard";
+import Order from "../pages/Order";
 
+export type StackPramsList = {
+    Dashboard: undefined;
+    Order: {
+        number:number | string;
+        order_id: string;
+    };
+};
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackPramsList>();
 
 function AppRoutes(){
     return(
         <Stack.Navigator>
-            <Stack.Screen name="Dashboard" component={Dashboard}/>
+            <Stack.Screen 
+            name="Dashboard" 
+            component={Dashboard}
+            options={{headerShown:false}}
+            />
+
+            <Stack.Screen
+            name="Order"
+            component={Order}
+            options={{headerShown:false}}
+            />
+            
         </Stack.Navigator>
     )
 }
