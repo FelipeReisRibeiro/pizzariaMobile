@@ -4,7 +4,7 @@ import  {useNavigation} from '@react-navigation/native'
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackPramsList} from '../../routes/app.routes'
-
+import { api } from "../../services/api";
 
 export default function Dashboard (){
     const navigation = useNavigation<NativeStackNavigationProp<StackPramsList>>();
@@ -16,9 +16,16 @@ export default function Dashboard (){
        if(number === ""){
         return;
        }
-       //precisa fazer a requisição e abrir a mesa e navegar para proxima tela.
-    navigation.navigate('Order', {number: number, order_id: '608802ae-c611-43ff-91b6-d0b97d32adc1'})       
-    }
+        //precisa fazer a requisição e abrir a mesa e navegar para proxima tela.
+    const response  = await api.post('/order', {
+        
+        table: Number(number)   //Nunber converte o number que era string para numero
+
+    })
+       
+        navigation.navigate('Order', {number: number, order_id: response.data.id})       
+        setNumber('');
+}
 
     
      return(
